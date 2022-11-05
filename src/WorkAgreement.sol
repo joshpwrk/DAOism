@@ -24,9 +24,9 @@ contract WorkAgreement {
 		bytes32 salaryFromHash; // hash(secretEmpr, salary)
 	}
 
-	mapping(address => mapping(address => uint)) pairToId;
-	mapping(address => uint[]) liveIds; // list of parties agreements were issued to
-	mapping(uint => Agreement) agreements;
+	mapping(address => mapping(address => uint)) public pairToId;
+	mapping(address => uint[]) public liveIds; // list of parties agreements were issued to
+	mapping(uint => Agreement) public agreements;
 
   uint nextId = 1;
 
