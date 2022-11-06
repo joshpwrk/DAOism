@@ -1,6 +1,7 @@
 pragma solidity ^0.8.15;
 
 import "src/ZKAverage.sol";
+import "src/ZKHash.sol";
 
 contract WorkAgreement {
   enum State {
@@ -99,21 +100,21 @@ contract WorkAgreement {
     isValidAverage = avgVerifier.verifyProof(avgPolyA, avgPolyB, avgPolyC, avgInput);
     require(isValidAverage, "average does not match salaries");
 
-    _verifyHashProof(avgVerifier, hashPolyA, hashPolyB, hashPolyC);
+    // todo: fix sha256 circom vs solidity incompatibility issues
+    _verifyHashProof(hashVerifierAddress, hashPolyA, hashPolyB, hashPolyC);
   }
 
   function _verifyHashProof(    
-    ZKAverage avgVerifier,
+    address hashVerifier,
     uint[2] memory hashPolyA,
     uint[2][2] memory hashPolyB,
     uint[2] memory hashPolyC
   ) internal view {
-    uint[3] memory hashInput;
+    uint[2] memory hashInput;
     hashInput[0] = 0;
-    hashInput[1] = 0;
-    hashInput[2] = 0;
+    hashInput[1] = uint(agreements[1].salaryHash);
 
-    bool isValidHash = avgVerifier.verifyProof(hashPolyA, hashPolyB, hashPolyC, hashInput);
+    bool isValidHash = ZKHash(hashVerifier).verifyProof(hashPolyA, hashPolyB, hashPolyC, hashInput);
     require(isValidHash, "hash does not match salaries");
   }
 

@@ -13,7 +13,7 @@ contract WorkAgreementTest is Test {
   uint secret = 12345; // used to hash salaries
 
   function testRun() external view {
-   console.logBytes32(sha256(abi.encode(secret, salary)));
+    console.logBytes32(sha256(abi.encode(secret, salary)));
     console.logBytes32(sha256(abi.encode(secret, 148249999999999997378560)));
   }
 
