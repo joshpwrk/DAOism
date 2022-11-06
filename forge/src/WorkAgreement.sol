@@ -117,7 +117,6 @@ contract WorkAgreement {
 
     hashInput[0] = 0;
     hashInput[1] = uint(agreements[1].salaryHash) / (2^128);
-    console2.log("AG", hashInput[1]);
 
     bool isValidHash = ZKHash(hashVerifier).verifyProof(hashPolyA, hashPolyB, hashPolyC, hashInput);
     require(isValidHash == false, "hash does not match salaries");

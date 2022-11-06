@@ -34,8 +34,8 @@ contract Seed is Script {
       if (i < 5) { role = "ENGINEER_1"; } 
       else { role = "DESIGNER_1"; }
 
-      console2.log(vm.addr(i+1));
-      console2.log(i, salaries[i]);
+      // console2.log(vm.addr(i+1));
+      // console2.log(i, salaries[i]);
 
       input = WorkAgreement.AgreementInput({
         recipient: vm.addr(i+1), // first one is the employer
