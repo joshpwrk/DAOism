@@ -24,6 +24,11 @@ contract WorkAgreementTest is Test {
   function testRun() external {
     _setup();
     _issueAgreements();
+    WorkAgreement.Agreement[] memory allAgreements = work.getAgreements();
+    for (uint i; i < allAgreements.length; i++) {
+      console2.log(allAgreements[i].recipient);
+      console2.logBytes32(allAgreements[i].salaryHash) ;
+    }
   }
 
   function _setup() public {
@@ -43,15 +48,13 @@ contract WorkAgreementTest is Test {
       else if (i >= 20 && i < 25) { role = "MARKETING_1"; }
       else { role = "MARKETING_2"; }
 
-      console2.logBytes32(role);
-      console2.log(i, salaries[i]);
 
       input = WorkAgreement.AgreementInput({
         recipient: vm.addr(i+1), // first one is the employer
         startDate: block.timestamp, // can change later
         endDate: 0,
         role: role,// bytes 32 string, assume ENUM? to keep simple?
-        salaryFromHash: keccak256(abi.encodePacked(secret, salaries[i])) // hash(secret, salary)
+        salaryHash: sha256(abi.encode(secret, salaries[i])) // hash(secret, salary)
       });
       vm.startBroadcast(vm.envUint("DAO_PRIVATE_KEY"));
       work.issueAgreement(input);

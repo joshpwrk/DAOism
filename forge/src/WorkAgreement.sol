@@ -2,17 +2,19 @@ pragma solidity ^0.8.15;
 
 contract WorkAgreement {
   enum State {
+    EMPTY,
     LIVE,
     CANCELLED 
   }
 
 	struct Agreement {
+    uint id;
     address issuer;
 		address recipient;
 		uint startDate;
 		uint endDate;
     bytes32 role; // bytes 32 string, assume ENUM? to keep simple?
-		bytes32 salaryFromHash; // hash(secretEmpr, salary)
+		bytes32 salaryHash; // hash(secretEmpr, salary)
 		State state; // did employee accepted
 	}
 
@@ -21,7 +23,7 @@ contract WorkAgreement {
 		uint startDate;
 		uint endDate;
     bytes32 role; // bytes 32 string, assume ENUM? to keep simple?
-		bytes32 salaryFromHash; // hash(secretEmpr, salary)
+		bytes32 salaryHash; // hash(secretEmpr, salary)
 	}
 
 	mapping(address => mapping(address => uint)) public pairToId;
@@ -30,18 +32,27 @@ contract WorkAgreement {
 
   uint nextId = 1;
 
-	function issueAgreement(AgreementInput memory input) external returns (uint newId) {
+  function getAgreements() external view returns (Agreement[] memory allAgreements) {
+    allAgreements = new Agreement[](nextId + 1);
+    for (uint i; i <= nextId; i++) {
+      allAgreements[i] = agreements[i];
+    }
+  }
+
+  function issueAgreement(AgreementInput memory input) external returns (uint newId) {
+    newId = nextId++;
+
     Agreement memory newAgreement = Agreement({
+      id: newId,
       issuer: msg.sender,
       recipient: input.recipient,
       startDate: input.startDate,
       endDate: input.endDate,
       role: input.role, 
-      salaryFromHash: input.salaryFromHash, 
+      salaryHash: input.salaryHash, 
       state: State.LIVE 
     });
 
-    newId = nextId++;
     pairToId[msg.sender][newAgreement.recipient] = newId;
     agreements[newId] = newAgreement;
     liveIds[msg.sender].push(newId);

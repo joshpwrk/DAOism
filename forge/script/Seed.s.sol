@@ -54,7 +54,7 @@ contract Seed is Script {
         startDate: block.timestamp, // can change later
         endDate: 0,
         role: role,// bytes 32 string, assume ENUM? to keep simple?
-        salaryFromHash: keccak256(abi.encodePacked(secret, salaries[i])) // hash(secret, salary)
+        salaryHash: sha256(abi.encode(secret, salaries[i])) // hash(secret, salary)
       });
       work.issueAgreement(input);
     }
