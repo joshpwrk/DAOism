@@ -1,0 +1,13 @@
+1,1,2,main.equalOut
+2,2,2,main.zeroOut
+3,3,2,main.a
+4,4,2,main.b
+5,-1,1,main.is_equal.out
+6,-1,1,main.is_equal.in[0]
+7,-1,1,main.is_equal.in[1]
+8,-1,0,main.is_equal.isz.out
+9,-1,0,main.is_equal.isz.in
+10,5,0,main.is_equal.isz.inv
+11,-1,0,main.is_zero.out
+12,-1,0,main.is_zero.in
+13,6,0,main.is_zero.inv

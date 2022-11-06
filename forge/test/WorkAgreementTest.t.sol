@@ -3,10 +3,12 @@ pragma solidity ^0.8.15;
 
 import "forge-std/Test.sol";
 import "src/WorkAgreement.sol";
+import "src/ZKAverage.sol";
 
 
 contract WorkAgreementTest is Test {
   WorkAgreement work;
+  ZKAverage averageVerifier;
 
   /* salaries */
   uint[30] salaries = [
@@ -21,20 +23,48 @@ contract WorkAgreementTest is Test {
   /* addresses are simply vm.addr(i) in ascending order similar to salaries */
   uint secret = 12345; // used to hash salaries
 
-  function testRun() external {
-    _setup();
-    _issueAgreements();
-    WorkAgreement.Agreement[] memory allAgreements = work.getAgreements();
-    for (uint i; i < allAgreements.length; i++) {
-      console2.log(allAgreements[i].recipient);
-      console2.logBytes32(allAgreements[i].salaryHash) ;
-    }
-  }
-
-  function _setup() public {
+  function setUp() external {
     vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
     work = new WorkAgreement();
+    averageVerifier = new ZKAverage();
     vm.stopBroadcast();
+  }
+
+  function testRun() external {
+    _issueAgreements();
+    // WorkAgreement.Agreement[] memory allAgreements = work.getAgreements();
+    // for (uint i; i < allAgreements.length; i++) {
+    //   console2.log(allAgreements[i].recipient);
+    //   console2.logBytes32(allAgreements[i].salaryHash) ;
+    // }
+  }
+
+  function testProof() external view {
+    uint[2] memory averageSalaries;
+    averageSalaries[0] = 30;
+    averageSalaries[1] = 80;
+
+    uint[2] memory avgPolyA;
+    avgPolyA[0] = uint(0x1e3b38a48c3187b08799478d8d60ccb03bd7485e0df79f65be6e4e6ddd8af911);
+    avgPolyA[1] = uint(0x1c35b184cdf4687f2f00e46a1f0854c8d792398d56dc07298054873a7106005a);
+
+    uint[2][2] memory avgPolyB;
+    avgPolyB[0][0] = uint(0x21f659598007ee92a8ed3a6515dcdff9c577c2d0bebbfb39b0ee018e20be1fca);
+    avgPolyB[0][1] = uint(0x0fd77325a8258971e7a2c2361101b736adb6329db08965c81abe9f63b9a8badf);
+    avgPolyB[1][0] = uint(0x1adec63955abb10996be846e15a7b7c94bfbee836c24df8593b528e6f4576f11);
+    avgPolyB[1][1] = uint(0x008c9821c773966a1f848db5de93c61cd5b810a68b48e41a98bf977aa7430897);
+
+    uint[2] memory avgPolyC;
+    avgPolyC[0] = uint(0x261f0ef778518d0388e0ddf82c44a26fdc3b715df7fee298690c1f6caca43cce);
+    avgPolyC[1] = uint(0x16d9bf7ad3e3a6e7cf32d5224c9bf4c1e2052c8b6b7f00a37dbe44abeef0919b);
+
+    work.submitAverageSalaryProof(
+      address(averageVerifier), 
+      averageSalaries, 
+      avgPolyA,
+      avgPolyB,
+      avgPolyC
+    );
   }
 
   function _issueAgreements() public {

@@ -63,8 +63,8 @@ template Sha256_2() {
     }
 
     for (i=0; i<256; i++) {
-        sha256compression.inp[i] <== num2bits[0].out[255-i];
-        sha256compression.inp[i+256] <== num2bits[1].out[255-i];
+        sha256compression.inp[i] <== num2bits[0].out[i];
+        sha256compression.inp[i+256] <== num2bits[1].out[i];
     }
 
     // sha256compression.inp[432] <== 1;
@@ -84,7 +84,7 @@ template Sha256_2() {
     // sha256compression.inp[511] <== 0;
 
     for (i=0; i<256; i++) {
-        bits2num.in[i] <== sha256compression.out[255-i];
+        bits2num.in[i] <== sha256compression.out[i];
     }
 
     out <== bits2num.out;

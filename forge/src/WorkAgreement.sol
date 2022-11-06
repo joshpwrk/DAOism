@@ -1,5 +1,7 @@
 pragma solidity ^0.8.15;
 
+import "src/ZKAverage.sol";
+
 contract WorkAgreement {
   enum State {
     EMPTY,
@@ -78,6 +80,19 @@ contract WorkAgreement {
     }
 
     require(removed, "agreement does not exist");
+  }
+
+  function submitAverageSalaryProof(
+    address avgVerifierAddress, 
+    uint[2] memory averageSalaries, 
+    uint[2] memory avgPolyA,
+    uint[2][2] memory avgPolyB,
+    uint[2] memory avgPolyC) public view returns(bool isValidAverage) {
+    ZKAverage avgVerifier = ZKAverage(avgVerifierAddress);
+
+    uint[3] memory avgInput = [1, averageSalaries[0], averageSalaries[1]];
+    isValidAverage = avgVerifier.verifyProof(avgPolyA, avgPolyB, avgPolyC, avgInput);
+    require(isValidAverage, "average does not match salaries");
   }
 
 }
