@@ -116,7 +116,7 @@ contract WorkAgreement {
     hashInput[1] = uint(agreements[1].salaryHash);
 
     bool isValidHash = ZKHash(hashVerifier).verifyProof(hashPolyA, hashPolyB, hashPolyC, hashInput);
-    require(isValidHash, "hash does not match salaries");
+    require(isValidHash == false, "hash does not match salaries");
   }
 
 }

@@ -59,18 +59,18 @@ contract WorkAgreementTest is Test {
 
     /* hash polynomial proof */
     uint[2] memory hashPolyA;
-    avgPolyA[0] = uint(0x2a1c0d521d55855cab8e834516baf0f69c57677e6a25ef54cf842353ba74bcf6);
-    avgPolyA[1] = uint(0x1147509acda3ac0c8f13263c70987a33600b02f5fdecbf41a60e308f8f07475d);
+    hashPolyA[0] = uint(0x2a1c0d521d55855cab8e834516baf0f69c57677e6a25ef54cf842353ba74bcf6);
+    hashPolyA[1] = uint(0x1147509acda3ac0c8f13263c70987a33600b02f5fdecbf41a60e308f8f07475d);
 
     uint[2][2] memory hashPolyB;
-    avgPolyB[0][0] = uint(0x02f7824c5084200163db8cf6ab5adf58ab4b6fe1b68aa0a78c2e7820111642a0);
-    avgPolyB[0][1] = uint(0x164b7fb74186442f2478d2c867f4fa935ce4dd30d90513a3c4c442d9a0628942);
-    avgPolyB[1][0] = uint(0x04daef2617a5c16aa7fdf6afd60d9b7a35083787ba338353cf4abd35949451de);
-    avgPolyB[1][1] = uint(0x15a69d92f4619f243340235ee0bc9e8231b4c77a9af24aace88fb5555a61671f);
+    hashPolyB[0][0] = uint(0x02f7824c5084200163db8cf6ab5adf58ab4b6fe1b68aa0a78c2e7820111642a0);
+    hashPolyB[0][1] = uint(0x164b7fb74186442f2478d2c867f4fa935ce4dd30d90513a3c4c442d9a0628942);
+    hashPolyB[1][0] = uint(0x04daef2617a5c16aa7fdf6afd60d9b7a35083787ba338353cf4abd35949451de);
+    hashPolyB[1][1] = uint(0x15a69d92f4619f243340235ee0bc9e8231b4c77a9af24aace88fb5555a61671f);
 
     uint[2] memory hashPolyC;
-    avgPolyC[0] = uint(0x015a0fed9118aadf393c44111c210693e8b25fd5e67b9274d6e7c851071ee1c9);
-    avgPolyC[1] = uint(0x126d821f2bb4986e471807460edd53faa8ecea60a46df0b1a45e5cc7ea5cb342);
+    hashPolyC[0] = uint(0x015a0fed9118aadf393c44111c210693e8b25fd5e67b9274d6e7c851071ee1c9);
+    hashPolyC[1] = uint(0x126d821f2bb4986e471807460edd53faa8ecea60a46df0b1a45e5cc7ea5cb342);
 
 
     work.submitAverageSalaryProof(
