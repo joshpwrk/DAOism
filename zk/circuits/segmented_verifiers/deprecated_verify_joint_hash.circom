@@ -7,8 +7,8 @@ pragma circom 2.1.1;
 include "../circom_library/sha256/sha256_2.circom";
 include "../circom_library/comparators.circom";
 template joinInputHashPieces() {
-    // Because dumbass JSON can only accept 32bit unsigned numbers, we need to split up our
-    // THICC ass 32B big bois into 16x 16bit numbers in the JSON. 
+    // Because JSON can only accept 32bit unsigned numbers, we need to split up our
+    // 32B hashed salary into 16x 16bit numbers in the JSON. 
     // Then we recombine those here into a large number with bit shifts.
     // We are assuming the inputs are little endian, and piece_0 corresponds to the lowest significant 16 bits,
     // and piece_15 corresponds to the highest signfiicant 16 bits.
