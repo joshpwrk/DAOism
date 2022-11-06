@@ -32,11 +32,6 @@ contract WorkAgreementTest is Test {
 
   function testRun() external {
     _issueAgreements();
-    // WorkAgreement.Agreement[] memory allAgreements = work.getAgreements();
-    // for (uint i; i < allAgreements.length; i++) {
-    //   console2.log(allAgreements[i].recipient);
-    //   console2.logBytes32(allAgreements[i].salaryHash) ;
-    // }
   }
 
   function testProof() external view {
@@ -61,6 +56,10 @@ contract WorkAgreementTest is Test {
     work.submitAverageSalaryProof(
       address(averageVerifier), 
       averageSalaries, 
+      avgPolyA,
+      avgPolyB,
+      avgPolyC,
+      address(0), // slot in hash verifier
       avgPolyA,
       avgPolyB,
       avgPolyC

@@ -17,7 +17,7 @@ contract WorkAgreementTest is Test {
     console.logBytes32(sha256(abi.encode(secret, 148249999999999997378560)));
   }
 
-  function testGetArrayOfBytes() external view {
+  function testGetArrayOfBytes() external pure {
     bytes32 hashToSplit = sha256(abi.encode(uint(1), uint(2)));
     uint256 numHash = uint256(hashToSplit);
     // console2.log("val to split", numHash);

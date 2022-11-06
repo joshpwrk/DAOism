@@ -87,12 +87,34 @@ contract WorkAgreement {
     uint[2] memory averageSalaries, 
     uint[2] memory avgPolyA,
     uint[2][2] memory avgPolyB,
-    uint[2] memory avgPolyC) public view returns(bool isValidAverage) {
+    uint[2] memory avgPolyC,
+    address hashVerifierAddress,
+    uint[2] memory hashPolyA,
+    uint[2][2] memory hashPolyB,
+    uint[2] memory hashPolyC
+  ) public view returns(bool isValidAverage) {
     ZKAverage avgVerifier = ZKAverage(avgVerifierAddress);
 
     uint[3] memory avgInput = [1, averageSalaries[0], averageSalaries[1]];
     isValidAverage = avgVerifier.verifyProof(avgPolyA, avgPolyB, avgPolyC, avgInput);
     require(isValidAverage, "average does not match salaries");
+
+    _verifyHashProof(avgVerifier, hashPolyA, hashPolyB, hashPolyC);
+  }
+
+  function _verifyHashProof(    
+    ZKAverage avgVerifier,
+    uint[2] memory hashPolyA,
+    uint[2][2] memory hashPolyB,
+    uint[2] memory hashPolyC
+  ) internal view {
+    uint[3] memory hashInput;
+    hashInput[0] = 0;
+    hashInput[1] = 0;
+    hashInput[2] = 0;
+
+    bool isValidHash = avgVerifier.verifyProof(hashPolyA, hashPolyB, hashPolyC, hashInput);
+    require(isValidHash, "hash does not match salaries");
   }
 
 }
