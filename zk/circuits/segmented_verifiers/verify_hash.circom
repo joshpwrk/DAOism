@@ -32,7 +32,7 @@ template joinInputHashPieces() {
     signal input hash_15;
 
     // Outputs.
-    signal output joined_public_hash;
+    signal output out;
 
     var temp_sum = 0;
     var shift_amount = 16;
@@ -52,7 +52,7 @@ template joinInputHashPieces() {
     temp_sum += hash_14 << 14*shift_amount;
     temp_sum += hash_15 << 15*shift_amount;
     
-    joined_public_hash <== temp_sum;
+    out <-- temp_sum;
 }
 
 template VerifyHash() {
@@ -96,7 +96,6 @@ template VerifyHash() {
     joiningHash.hash_13 <== hash_13;
     joiningHash.hash_14 <== hash_14;
     joiningHash.hash_15 <== hash_15;
-    joiningHash.hash_16 <== hash_16;
 
     component hash_function = Sha256_2();
     component is_equal = IsEqual();
@@ -108,4 +107,20 @@ template VerifyHash() {
     out <== is_equal.out;
 }
 
-component main{public [secret, salary, hashed_salary]} = VerifyHash();
+component main{public [secret, salary, 
+    hash_0,
+    hash_1,
+    hash_2,
+    hash_3,
+    hash_4,
+    hash_5,
+    hash_6,
+    hash_7,
+    hash_8,
+    hash_9,
+    hash_10,
+    hash_11,
+    hash_12,
+    hash_13,
+    hash_14,
+    hash_15 ]} = VerifyHash();

@@ -18,10 +18,21 @@ contract WorkAgreementTest is Test {
   }
 
   function testGetArrayOfBytes() external {
-    bytes32 hashToSplit = "0xb4a96241fb6f6f221063d4a5f80e1b5c8845c8f952a43c4f6d2d44058b1338cb";
-    for (uint i; i < 4; i++) {
-        console2.logBytes1(hashToSplit[i]);
+    bytes32 hashToSplit = sha256(abi.encode(uint(1), uint(2)));
+    uint256 numHash = uint256(hashToSplit);
+    console2.log("val to split", numHash);
+
+    uint16[16] memory splitHash;
+    for (uint j; j < 16; j++) {
+        splitHash[j] = uint16((numHash >> 16 * j) & 65535);
+        console2.logUint(splitHash[j]);
     }
-}
+
+    //B4A96241FB6F6DBCB53BF7A4259A77CD0D04664348B999D18000000000000000
+    //38CB
+
+    // for (uint i; i < 4; i++) {
+    //     console2.logBytes1(hashToSplit[i]);
+    // }
   }
  }
