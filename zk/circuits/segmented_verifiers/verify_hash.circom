@@ -36,9 +36,21 @@ template joinInputHashPieces() {
 
     var temp_sum = 0;
     var shift_amount = 16;
-    for (var i = 0; i < 16; i++) {
-        temp_sum += hash_0 << (i*shift_amount);
-    }
+    temp_sum += hash_0;
+    temp_sum += hash_1 << 1*shift_amount;
+    temp_sum += hash_2 << 2*shift_amount;
+    temp_sum += hash_3 << 3*shift_amount;
+    temp_sum += hash_4 << 4*shift_amount;
+    temp_sum += hash_5 << 5*shift_amount;
+    temp_sum += hash_6 << 6*shift_amount;
+    temp_sum += hash_7 << 7*shift_amount;
+    temp_sum += hash_8 << 8*shift_amount;
+    temp_sum += hash_9 << 9*shift_amount;
+    temp_sum += hash_10 << 10*shift_amount;
+    temp_sum += hash_12 << 11*shift_amount;
+    temp_sum += hash_13 << 13*shift_amount;
+    temp_sum += hash_14 << 14*shift_amount;
+    temp_sum += hash_15 << 15*shift_amount;
     
     joined_public_hash <== temp_sum;
 }
@@ -92,7 +104,7 @@ template VerifyHash() {
     hash_function.a <== secret;
     hash_function.b <== salary;
     is_equal.in[0] <== hash_function.out;
-    is_equal.in[1] <== hashed_salary;
+    is_equal.in[1] <== joiningHash.out;
     out <== is_equal.out;
 }
 
