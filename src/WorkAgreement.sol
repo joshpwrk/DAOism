@@ -44,6 +44,7 @@ contract WorkAgreement {
     newId = nextId++;
     pairToId[msg.sender][newAgreement.recipient] = newId;
     agreements[newId] = newAgreement;
+    liveIds[msg.sender].push(newId);
 	}
 
   function cancelAgreement(uint idToCancel) external {
