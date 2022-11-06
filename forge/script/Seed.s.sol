@@ -30,7 +30,7 @@ contract Seed is Script {
   uint secret = 12345; // used to hash salaries
 
   function run() external {
-    work = WorkAgreement(0xb1e30c058B715cF83932BD5ACf04942C962c7D2e);
+    work = WorkAgreement(0xF96Ca3Ae61A46Ff5eE57c9F97d3CCD2F4E87b7Bc);
     _issueAgreements();
   }
 
@@ -46,7 +46,7 @@ contract Seed is Script {
       else if (i >= 20 && i < 25) { role = "MARKETING_1"; }
       else { role = "MARKETING_2"; }
 
-      console2.logBytes32(role);
+      console2.log(vm.addr(i+1));
       console2.log(i, salaries[i]);
 
       input = WorkAgreement.AgreementInput({

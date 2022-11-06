@@ -1,0 +1,14 @@
+forge/cache/
+forge/out/
+forge/broadcast/
+zk/circuits/agreement_verifier/agreement_verifier_output
+
+# Ignore Environment Variables!
+forge/.env
+forge/.env.prod
+
+# Ignore all vscode settings
+.vscode/
+
+# Ignore local misc files
+.DS_Store
