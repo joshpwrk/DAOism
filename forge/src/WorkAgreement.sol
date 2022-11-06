@@ -93,15 +93,16 @@ contract WorkAgreement {
     uint[2] memory hashPolyA,
     uint[2][2] memory hashPolyB,
     uint[2] memory hashPolyC
-  ) public view returns(bool isValidAverage) {
+  ) public view {
     ZKAverage avgVerifier = ZKAverage(avgVerifierAddress);
 
     uint[3] memory avgInput = [1, averageSalaries[0], averageSalaries[1]];
-    isValidAverage = avgVerifier.verifyProof(avgPolyA, avgPolyB, avgPolyC, avgInput);
+    bool isValidAverage = avgVerifier.verifyProof(avgPolyA, avgPolyB, avgPolyC, avgInput);
     require(isValidAverage, "average does not match salaries");
 
     // todo: fix sha256 circom vs solidity incompatibility issues
     _verifyHashProof(hashVerifierAddress, hashPolyA, hashPolyB, hashPolyC);
+
   }
 
   function _verifyHashProof(    

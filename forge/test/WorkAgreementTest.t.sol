@@ -4,11 +4,13 @@ pragma solidity ^0.8.15;
 import "forge-std/Test.sol";
 import "src/WorkAgreement.sol";
 import "src/ZKAverage.sol";
+import "src/ZKHash.sol";
 
 
 contract WorkAgreementTest is Test {
   WorkAgreement work;
   ZKAverage averageVerifier;
+  ZKHash hashVerifier;
 
   /* salaries */
   uint[30] salaries = [
@@ -27,6 +29,7 @@ contract WorkAgreementTest is Test {
     vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
     work = new WorkAgreement();
     averageVerifier = new ZKAverage();
+    hashVerifier = new ZKHash();
     vm.stopBroadcast();
   }
 
@@ -39,6 +42,7 @@ contract WorkAgreementTest is Test {
     averageSalaries[0] = 30;
     averageSalaries[1] = 80;
 
+    /* average polynomial proof */
     uint[2] memory avgPolyA;
     avgPolyA[0] = uint(0x1e3b38a48c3187b08799478d8d60ccb03bd7485e0df79f65be6e4e6ddd8af911);
     avgPolyA[1] = uint(0x1c35b184cdf4687f2f00e46a1f0854c8d792398d56dc07298054873a7106005a);
@@ -53,16 +57,32 @@ contract WorkAgreementTest is Test {
     avgPolyC[0] = uint(0x261f0ef778518d0388e0ddf82c44a26fdc3b715df7fee298690c1f6caca43cce);
     avgPolyC[1] = uint(0x16d9bf7ad3e3a6e7cf32d5224c9bf4c1e2052c8b6b7f00a37dbe44abeef0919b);
 
+    /* hash polynomial proof */
+    uint[2] memory hashPolyA;
+    avgPolyA[0] = uint(0x2a1c0d521d55855cab8e834516baf0f69c57677e6a25ef54cf842353ba74bcf6);
+    avgPolyA[1] = uint(0x1147509acda3ac0c8f13263c70987a33600b02f5fdecbf41a60e308f8f07475d);
+
+    uint[2][2] memory hashPolyB;
+    avgPolyB[0][0] = uint(0x02f7824c5084200163db8cf6ab5adf58ab4b6fe1b68aa0a78c2e7820111642a0);
+    avgPolyB[0][1] = uint(0x164b7fb74186442f2478d2c867f4fa935ce4dd30d90513a3c4c442d9a0628942);
+    avgPolyB[1][0] = uint(0x04daef2617a5c16aa7fdf6afd60d9b7a35083787ba338353cf4abd35949451de);
+    avgPolyB[1][1] = uint(0x15a69d92f4619f243340235ee0bc9e8231b4c77a9af24aace88fb5555a61671f);
+
+    uint[2] memory hashPolyC;
+    avgPolyC[0] = uint(0x015a0fed9118aadf393c44111c210693e8b25fd5e67b9274d6e7c851071ee1c9);
+    avgPolyC[1] = uint(0x126d821f2bb4986e471807460edd53faa8ecea60a46df0b1a45e5cc7ea5cb342);
+
+
     work.submitAverageSalaryProof(
       address(averageVerifier), 
       averageSalaries, 
       avgPolyA,
       avgPolyB,
       avgPolyC,
-      address(0), // slot in hash verifier
-      avgPolyA,
-      avgPolyB,
-      avgPolyC
+      address(hashVerifier), // slot in hash verifier
+      hashPolyA,
+      hashPolyB,
+      hashPolyC
     );
   }
 
