@@ -30,7 +30,7 @@ contract WorkAgreement {
 	mapping(address => uint[]) public liveIds; // list of parties agreements were issued to
 	mapping(uint => Agreement) public agreements;
 
-  uint nextId = 1;
+  uint nextId = 1; // todo: make exposed
 
   function getAgreements() external view returns (Agreement[] memory allAgreements) {
     allAgreements = new Agreement[](nextId + 1);
@@ -43,7 +43,7 @@ contract WorkAgreement {
     newId = nextId++;
 
     Agreement memory newAgreement = Agreement({
-      id: newId,
+      id: newId, // todo: manually add id in the input, trust dapp will only take next Id.
       issuer: msg.sender,
       recipient: input.recipient,
       startDate: input.startDate,

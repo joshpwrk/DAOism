@@ -38,10 +38,10 @@ template parallel VerifyAllHashes() {
 
     // Private inputs.
     signal input secret; // What is this used for?
-    signal input list_of_salaries[30];
+    signal input list_of_salaries[10];
 
     // Public inputs.
-    signal input list_of_publicly_hashed_salaries[30];
+    signal input list_of_publicly_hashed_salaries[10];
     // TODO(michael_ershov): Add in a std_of_salaries (and the corresponding checks) as well.
 
     // result[x] = do_hashes_match ? 1 : 0;
@@ -52,9 +52,9 @@ template parallel VerifyAllHashes() {
     // Main logic.
     var isValid = 0;
 
-    component hash_components[30];
+    component hash_components[10];
 
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < 10; i++) {
         hash_components[i] = CompareHash();
         hash_components[i].secret <== secret;
         hash_components[i].salary <== list_of_salaries[i];
@@ -63,23 +63,23 @@ template parallel VerifyAllHashes() {
     }
 
     component is_hash_equal = IsEqual();
-    is_hash_equal.in[0] <== 30;
+    is_hash_equal.in[0] <== 10;
     is_hash_equal.in[1] <== sum_hash;
     out <== is_hash_equal.out;
 }
 
 template VerifyAverageSalary() {
     // Private inputs.
-    signal input list_of_salaries[30];
+    signal input list_of_salaries[10];
 
     // Public inputs.
-    signal input average_of_salaries[6];
+    signal input average_of_salaries[2];
 
     signal output out;
 
-    var true_salary_averages[6]; 
+    var true_salary_averages[2]; 
     var role_capacity = 5; // This should not change.
-    for (var roles = 0; roles < 6; roles++) {
+    for (var roles = 0; roles < 2; roles++) {
         true_salary_averages[roles] = 0;
         for (var person = 0; person < role_capacity; person++) {
             true_salary_averages[roles] += list_of_salaries[roles*role_capacity + person];
@@ -88,8 +88,8 @@ template VerifyAverageSalary() {
     }
 
     var truth_counter = 0;
-    component are_averages_equal_components[6] ;
-    for (var i = 0; i < 6; i++) {
+    component are_averages_equal_components[2] ;
+    for (var i = 0; i < 2; i++) {
         are_averages_equal_components[i] = IsEqual();
         are_averages_equal_components[i].in[0] <== true_salary_averages[i];
         are_averages_equal_components[i].in[1] <== average_of_salaries[i];
@@ -97,7 +97,7 @@ template VerifyAverageSalary() {
     }
 
     component final_comparator = IsEqual();
-    final_comparator.in[0] <== 6;
+    final_comparator.in[0] <== 2;
     final_comparator.in[1] <== truth_counter;
     out <== final_comparator.out;
 }
@@ -105,11 +105,11 @@ template VerifyAverageSalary() {
 template verifyHashAndAverageSalary() {
     // Private inputs
     signal input secret; // What is this used for?
-    signal input list_of_salaries[30];
+    signal input list_of_salaries[10];
 
     // Public inputs
-    signal input list_of_publicly_hashed_salaries[30];
-    signal input average_of_salaries[6];
+    signal input list_of_publicly_hashed_salaries[10];
+    signal input average_of_salaries[2];
 
     // outputs
     signal output isValidHashAndVerification;
