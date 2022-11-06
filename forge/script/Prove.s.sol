@@ -1,41 +1,28 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.15;
 
-import "forge-std/Test.sol";
+import "forge-std/Script.sol";
 import "src/WorkAgreement.sol";
 import "src/ZKAverage.sol";
 import "src/ZKHash.sol";
 
 
-contract WorkAgreementTest is Test {
+contract Prove is Script {
   WorkAgreement work;
   ZKAverage averageVerifier;
   ZKHash hashVerifier;
 
-  /* salaries */
-  /* salaries */
-  uint[10] salaries = [
-    148_250, 115_000, 138_000, 143_000, 158_000, // eng1
-    168_250, 135_000, 168_000, 163_000, 178_000 // des1
-  ]; // mar2
-
-  /* addresses are simply vm.addr(i) in ascending order similar to salaries */
-  uint secret = 12345; // used to hash salaries
-
-  function setUp() external {
+  function run() external {
     vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-    work = new WorkAgreement();
-    averageVerifier = new ZKAverage();
-    hashVerifier = new ZKHash();
-    vm.stopBroadcast();
+    work = WorkAgreement(0x727e30e17cA86455A8E9c3DF1EC14E201123eB65);
+    averageVerifier = ZKAverage(0x3034665C2dFb74eE4CCD8D9bce2e10e4bB6C48a9);
+    hashVerifier = ZKHash(0xA2b78B63D19B7e6C18E75072f8B649F0819ED386);
+
+    doProof();
+    vm.stopBroadcast();  
   }
 
-  function testRun() external {
-    _issueAgreements();
-    testProof();
-  }
-
-  function testProof() public view {
+  function doProof() public view {
     uint[2] memory averageSalaries;
     averageSalaries[0] = 140450;
     console2.log("averageSalaries", averageSalaries[0]);
@@ -107,24 +94,4 @@ contract WorkAgreementTest is Test {
     );
   }
 
-  function _issueAgreements() public {
-    WorkAgreement.AgreementInput memory input;
-    for (uint i; i < 10; i++) {
-      bytes32 role;
-      if (i < 5) { role = "ENGINEER_1"; } 
-      else { role = "DESIGNER_1"; }
-
-      input = WorkAgreement.AgreementInput({
-        recipient: vm.addr(i+1), // first one is the employer
-        startDate: block.timestamp, // can change later
-        endDate: 0,
-        role: role,// bytes 32 string, assume ENUM? to keep simple?
-        salaryHash: sha256(abi.encode(secret, salaries[i])) // hash(secret, salary)
-      });
-      console2.log(i, uint(sha256(abi.encode(secret, salaries[i]))));
-      vm.startBroadcast(vm.envUint("DAO_PRIVATE_KEY"));
-      work.issueAgreement(input);
-      vm.stopBroadcast();
-    }
-  }
  }

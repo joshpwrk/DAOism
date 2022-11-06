@@ -11,6 +11,8 @@
 //
 //
 // SPDX-License-Identifier: GPL-3.0
+import "forge-std/console2.sol";
+
 pragma solidity ^0.8.15;
 library PairingHash {
     struct G1Point {
@@ -224,6 +226,7 @@ contract ZKHash {
         // Compute the linear combination vk_x
         PairingHash.G1Point memory vk_x = PairingHash.G1Point(0, 0);
         for (uint i = 0; i < input.length; i++) {
+            console2.log("ERROR", input[i]);
             require(input[i] < snark_scalar_field,"verifier-gte-snark-scalar-field");
             vk_x = PairingHash.addition(vk_x, PairingHash.scalar_mul(vk.IC[i + 1], input[i]));
         }
