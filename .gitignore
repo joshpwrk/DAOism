@@ -1,5 +1,6 @@
 cache/
 out/
+broadcast/Seed*
 
 # Ignore Environment Variables!
 .env

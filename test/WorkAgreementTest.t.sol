@@ -1,20 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.15;
 
-import "forge-std/Script.sol";
+import "forge-std/Test.sol";
 import "src/WorkAgreement.sol";
-import "forge-std/console2.sol";
 
 
-// seed: 
-
-
-contract Seed is Script {
+contract WorkAgreementTest is Test {
   WorkAgreement work;
-
-  /* address setup */
-  // address deployer = vm.addr(vm.envUint("PRIVATE_KEY"));
-  // address dao = vm.addr(vm.envUint("DAO_PRIVATE_KEY"));
 
   /* salaries */
   uint[30] salaries = [
@@ -29,14 +21,19 @@ contract Seed is Script {
   /* addresses are simply vm.addr(i) in ascending order similar to salaries */
   uint secret = 12345; // used to hash salaries
 
-  function run() external {
-    work = WorkAgreement(0xb1e30c058B715cF83932BD5ACf04942C962c7D2e);
+  function testRun() external {
+    _setup();
     _issueAgreements();
+  }
+
+  function _setup() public {
+    vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+    work = new WorkAgreement();
+    vm.stopBroadcast();
   }
 
   function _issueAgreements() public {
     WorkAgreement.AgreementInput memory input;
-    vm.startBroadcast(vm.envUint("DAO_PRIVATE_KEY"));
     for (uint i; i < 30; i++) {
       bytes32 role;
       if (i < 5) { role = "DESIGNER_1"; } 
@@ -56,9 +53,9 @@ contract Seed is Script {
         role: role,// bytes 32 string, assume ENUM? to keep simple?
         salaryFromHash: keccak256(abi.encodePacked(secret, salaries[i])) // hash(secret, salary)
       });
+      vm.startBroadcast(vm.envUint("DAO_PRIVATE_KEY"));
       work.issueAgreement(input);
+      vm.stopBroadcast();
     }
-    vm.stopBroadcast();
   }
-
  }
