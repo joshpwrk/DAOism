@@ -16,7 +16,7 @@ Flow:
 5. Then, `WorkAgreement.sol` takes in all the hashed salaries from the contract state and routes those to `ZKHash.sol` to ensure that the supplied salaries match the ones on-chain
 
 ## The Why:
-In this unique situation, it's possible to make provable claims about employee salaries without revealing their salaries to the public. This has a couple very interesting usecases:
+With on-chain ZK-SNARK verifiers, it's possible to make provable claims about employee salaries without revealing their salaries to the public. This has a couple very interesting usecases:
 (1) Negotiations and competitiveness: share the average salary per contributor role without sharing peer salaries
 (2) Equity: share salary ranges based on demographics and roles, thus proving equal pay without revealing sensitive details
 (3) Undercollateralized loans: submit salary proofs to decentralized lending protocols like Aave to get more attractive loans due to better credit worthiness
