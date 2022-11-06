@@ -1,0 +1,13 @@
+cache/
+out/
+broadcast/
+
+# Ignore Environment Variables!
+.env
+.env.prod
+
+# Ignore all vscode settings
+.vscode/
+
+# Ignore local misc files
+.DS_Store
