@@ -3,11 +3,11 @@ pragma solidity ^0.8.15;
 
 import "forge-std/Script.sol";
 import "src/ZKAverage.sol";
+import "src/ZKHash.sol";
 
-
-// firstDeploy: 0xBD93BDaff48C1273b7bc709781C6B35B40C19569 
 contract DeployZkVerifier is Script {
   ZKAverage averageVerifier;
+  ZKHash hashVerifier;
 
   function run() external {
     _setup();
@@ -16,6 +16,7 @@ contract DeployZkVerifier is Script {
   function _setup() public {
     vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
     averageVerifier = new ZKAverage();
+    hashVerifier = new ZKHash();
     vm.stopBroadcast();
   }
  }

@@ -5,10 +5,6 @@ import "forge-std/Script.sol";
 import "src/WorkAgreement.sol";
 import "forge-std/console2.sol";
 
-
-// seed: 
-
-
 contract Seed is Script {
   WorkAgreement work;
 
@@ -17,34 +13,26 @@ contract Seed is Script {
   // address dao = vm.addr(vm.envUint("DAO_PRIVATE_KEY"));
 
   /* salaries */
-  uint[30] salaries = [
-    148_250e18, 115_000e18, 138_000e18, 143_000e18, 158_000e18, // des1
-    168_250e18, 135_000e18, 168_000e18, 163_000e18, 178_000e18, // des2
-    105_250e18, 110_000e18, 95_000e18, 79_000e18, 45_000e18, // eng1
-    145_250e18, 156_000e18, 200_000e18, 179_000e18, 145_000e18, // eng2
-    100_250e18, 99_000e18, 88_000e18, 104_000e18, 105_000e18, // mar1
-    120_250e18, 109_000e18, 134_000e18, 123_000e18, 115_000e18
+  uint[10] salaries = [
+    148_250, 115_000, 138_000, 143_000, 158_000, // eng1
+    168_250, 135_000, 168_000, 163_000, 178_000 // des1
   ]; // mar2
 
   /* addresses are simply vm.addr(i) in ascending order similar to salaries */
   uint secret = 12345; // used to hash salaries
 
   function run() external {
-    work = WorkAgreement(0xF96Ca3Ae61A46Ff5eE57c9F97d3CCD2F4E87b7Bc);
+    work = WorkAgreement(0x727e30e17cA86455A8E9c3DF1EC14E201123eB65);
     _issueAgreements();
   }
 
   function _issueAgreements() public {
     WorkAgreement.AgreementInput memory input;
     vm.startBroadcast(vm.envUint("DAO_PRIVATE_KEY"));
-    for (uint i; i < 30; i++) {
+    for (uint i; i < 10; i++) {
       bytes32 role;
-      if (i < 5) { role = "DESIGNER_1"; } 
-      else if (i >= 5 && i < 10) { role = "DESIGNER_2"; }
-      else if (i >= 10 && i < 15) { role = "ENGINEER_1"; }
-      else if (i >= 15 && i < 20) { role = "ENGINEER_2"; }
-      else if (i >= 20 && i < 25) { role = "MARKETING_1"; }
-      else { role = "MARKETING_2"; }
+      if (i < 5) { role = "ENGINEER_1"; } 
+      else { role = "DESIGNER_1"; }
 
       console2.log(vm.addr(i+1));
       console2.log(i, salaries[i]);
