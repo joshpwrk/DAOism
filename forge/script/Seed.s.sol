@@ -22,7 +22,7 @@ contract Seed is Script {
   uint secret = 12345; // used to hash salaries
 
   function run() external {
-    work = WorkAgreement(0x727e30e17cA86455A8E9c3DF1EC14E201123eB65);
+    work = WorkAgreement(0x4DE482E4eF823F42f32Eea59c51D09FA6CAb5eb0);
     _issueAgreements();
   }
 

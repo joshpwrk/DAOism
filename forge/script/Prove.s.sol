@@ -14,9 +14,9 @@ contract Prove is Script {
 
   function run() external {
     vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-    work = WorkAgreement(0x727e30e17cA86455A8E9c3DF1EC14E201123eB65);
-    averageVerifier = ZKAverage(0x3034665C2dFb74eE4CCD8D9bce2e10e4bB6C48a9);
-    hashVerifier = ZKHash(0xA2b78B63D19B7e6C18E75072f8B649F0819ED386);
+    work = WorkAgreement(0x4DE482E4eF823F42f32Eea59c51D09FA6CAb5eb0);
+    averageVerifier = ZKAverage(0x61bF6080043bc5520d8c8BE8D44704eD0F45a8CD);
+    hashVerifier = ZKHash(0xA8Dd58135c1b0Ddc452c01d4811F5910Fb4D1C28);
 
     doProof();
     vm.stopBroadcast();  
