@@ -1,10 +1,11 @@
-cache/
-out/
-broadcast/Seed*
+forge/cache/
+forge/out/
+forge/broadcast/
+zk/circuits/agreement_verifier/agreement_verifier_output
 
 # Ignore Environment Variables!
-.env
-.env.prod
+forge/.env
+forge/.env.prod
 
 # Ignore all vscode settings
 .vscode/
