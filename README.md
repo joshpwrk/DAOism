@@ -1,9 +1,9 @@
 # WorkAgreement
 
 ## WorkAgreement.sol: 
-- allows creation / cancelation of employment contracts 
-- the salary information is hashed from sha256(secret, salary) off-chain before posted on-chain
-- a `submitAverageSalaryProof()` routes to the `ZKAverage` and `ZKHash` on-chain verifiers which verify that an certain role does in fact match the claimed average
+- allows creation / cancellation of employment contracts on-chain
+- the salary information is hashed with sha256(secret, salary) 
+- a `submitAverageSalaryProof()` routes to the `ZKAverage` and `ZKHash` on-chain verifiers which verify that a certain role does in fact match the claimed average
 
 ## ZK Verifiers (ZKAverage.sol, ZKHash.sol)
 - Generated via Circom 2.1.1 and snarkjs. 
