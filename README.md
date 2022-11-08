@@ -1,4 +1,7 @@
-# WorkAgreement
+# DAOism smart contracts and ZK circuits
+
+## For dApp interface repo go to:
+https://github.com/dappbeast/daoism
 
 ## WorkAgreement.sol: 
 - allows creation / cancellation of employment contracts on-chain
