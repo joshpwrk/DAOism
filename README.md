@@ -1,6 +1,6 @@
 # DAOism smart contracts and ZK circuits
 
-[ETHGlobal SF Hackathon](https://ethglobal.com/showcase/daoism-93bir) 3X prize winner.
+🎉[ETHGlobal SF Hackathon](https://ethglobal.com/showcase/daoism-93bir) 3X prize winner 🎉
 
 ## For dApp interface repo go to:
 https://github.com/dappbeast/daoism
