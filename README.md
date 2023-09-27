@@ -5,6 +5,13 @@
 ## For dApp interface repo go to:
 https://github.com/dappbeast/daoism
 
+## The Why:
+With on-chain ZK-SNARK verifiers, it's possible to make provable claims about employee salaries without revealing their salaries to the public. This has a couple very interesting usecases:
+1. Negotiations and competitiveness: provably share the average salary per contributor role without sharing individual salaries
+2. Equity: share salary ranges based on demographics and roles, thus proving equal pay without revealing sensitive details
+3. Undercollateralized loans: submit salary proofs to decentralized lending protocols like Aave to get more attractive loans due to better credit worthiness
+4. Sybil resistance: use these contracts to prove humanity
+
 ## WorkAgreement.sol: 
 - allows creation / cancellation of employment contracts on-chain
 - the salary information is hashed with sha256(secret, salary) 
@@ -19,13 +26,6 @@ Flow:
 3. The public inputs (unhashed salaries, claimed averages) + proofs are submitted to `WorkAgreement.submitAverageSalaryProof()`
 4. Within the function, `WorkAgremeent.sol` first routes to `ZKAverage.sol` to verify the average calculation
 5. Then, `WorkAgreement.sol` takes in all the hashed salaries from the contract state and routes those to `ZKHash.sol` to ensure that the supplied salaries match the ones on-chain
-
-## The Why:
-With on-chain ZK-SNARK verifiers, it's possible to make provable claims about employee salaries without revealing their salaries to the public. This has a couple very interesting usecases:
-1. Negotiations and competitiveness: provably share the average salary per contributor role without sharing individual salaries
-2. Equity: share salary ranges based on demographics and roles, thus proving equal pay without revealing sensitive details
-3. Undercollateralized loans: submit salary proofs to decentralized lending protocols like Aave to get more attractive loans due to better credit worthiness
-4. Sybil resistance: use these contracts to prove humanity
 
 ## Testing
 `forge test` 
