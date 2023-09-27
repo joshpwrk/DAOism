@@ -22,7 +22,7 @@ Flow:
 
 ## The Why:
 With on-chain ZK-SNARK verifiers, it's possible to make provable claims about employee salaries without revealing their salaries to the public. This has a couple very interesting usecases:
-1. Negotiations and competitiveness: share the average salary per contributor role without sharing peer salaries
+1. Negotiations and competitiveness: provably share the average salary per contributor role without sharing individual salaries
 2. Equity: share salary ranges based on demographics and roles, thus proving equal pay without revealing sensitive details
 3. Undercollateralized loans: submit salary proofs to decentralized lending protocols like Aave to get more attractive loans due to better credit worthiness
 4. Sybil resistance: use these contracts to prove humanity
